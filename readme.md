@@ -1,4 +1,61 @@
-Perfect! A **README** will make your project professional and easy for anyone to understand or run. Here’s a complete example you can drop into your project folder as `README.md`:
+# Flight-Delay-Predictor
+Predict flight arrival delays using machine learning. Includes Jupyter Notebook, trained model, and Streamlit app.
+Ah — now the problem is **your dataset file is too large for GitHub**. GitHub has a **100 MB limit per file**, and your `data/DelayedFlights.csv` is **234 MB**.
+
+You have a few options:
+
+---
+
+### **Option 1 — Remove the large dataset from Git and push**
+
+1. Remove the dataset from Git tracking (don’t delete it locally):
+
+```bash
+git rm --cached data/DelayedFlights.csv
+```
+
+2. Commit the change:
+
+```bash
+git commit -m "Remove large dataset to comply with GitHub limits"
+```
+
+3. Push again:
+
+```bash
+git push -u origin main
+```
+
+✅ Your repository will now push successfully.
+
+> Note: Users cloning the repo won’t get the dataset. You can provide a **download link** in your README.
+
+---
+
+### **Option 2 — Use Git Large File Storage (Git LFS)**
+
+* Install Git LFS: [https://git-lfs.github.com](https://git-lfs.github.com)
+* Track the large file:
+
+```bash
+git lfs install
+git lfs track "data/DelayedFlights.csv"
+git add .gitattributes
+git add data/DelayedFlights.csv
+git commit -m "Track large CSV with Git LFS"
+git push origin main
+```
+
+✅ This allows pushing files larger than 100 MB.
+
+---
+
+**Recommendation:** For a portfolio project, usually **Option 1 is simpler** — remove the CSV and provide a download link in your README.
+
+If you want, I can **update your README** with a section telling others how to download the dataset, so your GitHub repo stays under limits. Do you want me to do that?
+
+
+Exactly — I can rewrite your README so it **removes the large CSV from GitHub** but still tells users how to get it. Here’s a clean version you can replace your current README with:
 
 ---
 
@@ -26,12 +83,13 @@ project_folder/
 ├── models/
 │   └── delay_model.pkl               # Trained Random Forest model
 │
-├── data/
-│   └── flight_delays.csv             # Flight dataset
-│
 ├── app/
 │   └── app.py                        # Streamlit app for predictions
 │
+├── data/                             
+│   └── (dataset not included due to size) 
+│
+├── requirements.txt                   # Python dependencies
 └── README.md                         # This file
 ```
 
@@ -39,8 +97,8 @@ project_folder/
 
 ## **Dataset**
 
-* The dataset contains historical flight records with columns such as:
-  `Year, Month, DayofMonth, DayOfWeek, DepTime, CRSDepTime, ArrDelay, DepDelay, Distance, UniqueCarrier, Origin, Dest, …`
+* The original dataset is **large (~235 MB)** and cannot be included in the repo.
+* You can download it here: https://www.kaggle.com/datasets/giovamata/airlinedelaycauses?resource=download
 * Features used for modeling:
 
   * `Distance`
@@ -52,15 +110,16 @@ project_folder/
 
 ## **How to Run the Notebook**
 
-1. Open `flight_delay_notebook.ipynb` in Jupyter Notebook.
-2. Run all cells in order.
-3. The model (`delay_model.pkl`) will be saved in the `models/` folder.
+1. Place the downloaded dataset in the `data/` folder.
+2. Open `flight_delay_notebook.ipynb` in Jupyter Notebook.
+3. Run all cells in order.
+4. The model (`delay_model.pkl`) will be saved in the `models/` folder.
 
 ---
 
 ## **How to Run the Streamlit App**
 
-1. Navigate to the `app/` folder in terminal:
+1. Navigate to the `app/` folder:
 
 ```bash
 cd app
@@ -72,7 +131,7 @@ cd app
 streamlit run app.py
 ```
 
-3. The app sidebar allows you to input:
+3. Enter flight details in the sidebar:
 
    * Distance (miles)
    * Departure Delay (minutes)
@@ -85,7 +144,7 @@ streamlit run app.py
 
 ## **Optional Enhancements**
 
-* Include **Weekday** as a feature when retraining the model.
+* Add **Weekday** as a feature when retraining the model.
 * Add **“Is Delayed?”** classification (>15 minutes).
 * Improve UI/UX in the Streamlit app with charts or color-coded outputs.
 
@@ -103,6 +162,6 @@ streamlit run app.py
 Install dependencies with:
 
 ```bash
-pip install pandas numpy scikit-learn joblib streamlit
+pip install -r requirements.txt
 ```
 
